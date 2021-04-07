@@ -1,15 +1,15 @@
 import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
-import { StatusTask } from "./tasks.model";
+import { StatusTask } from "./task-status.enum";
 
 @Entity()
 export class Task extends BaseEntity {
 
     @PrimaryGeneratedColumn()
-    private id: number;
+    id: number;
     @Column()
-    private title:string;
+    title:string;
     @Column()
-    private description: string;
+    description: string;
     @Column()
-    private status: StatusTask;
+    status: StatusTask;
 }

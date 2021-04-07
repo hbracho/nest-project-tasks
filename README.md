@@ -71,3 +71,12 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 ## License
 
 Nest is [MIT licensed](LICENSE).
+
+
+docker run --name db-postgres -e POSTGRES_PASSWORD=postgres -d postgres
+
+docker exec -it db-postgres bash
+
+\c task_db;    => response "you are now connected to database "task_db" as user "postgres"."
+
+select * from Task;
