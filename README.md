@@ -73,10 +73,15 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 Nest is [MIT licensed](LICENSE).
 
 
-docker run --name db-postgres -e POSTGRES_PASSWORD=postgres -d postgres
+https://betterprogramming.pub/connect-from-local-machine-to-postgresql-docker-container-f785f00461a7
+
+docker rm db-postgres
+
+docker run --name db-postgres -e POSTGRES_PASSWORD=postgres -d -p 5000:5432 postgres
 
 docker exec -it db-postgres bash
-
+psql -U postgres
+CREATE DATABASE task_db;
 \c task_db;    => response "you are now connected to database "task_db" as user "postgres"."
 
 select * from Task;

@@ -1,0 +1,67 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: task
+  labels:
+    app: task-rest
+    tags.datadoghq.com/env: "dev"
+    tags.datadoghq.com/service: "task-service"
+    tags.datadoghq.com/version: "v0.1"      
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: task-pod
+  template:
+    metadata:      
+      labels:
+        app: task-pod        
+    spec:
+      containers:
+      - name: task
+        image: hbracho/task:v0.1
+        ports:
+        - containerPort: 3000
+        env:
+          - name: POSTGRES_DB
+            value: "task_db"
+          - name: POSTGRES_USER
+            value: "postgres"
+          - name: POSTGRES_PASSWORD
+            value: "postgres" 
+          - name: POSTGRES_HOST
+            value: "database"  
+          - name: POSTGRES_PORT
+            value: "5432"                       
+          - name: DD_ENV
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.labels['tags.datadoghq.com/env']
+          - name: DD_SERVICE
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.labels['tags.datadoghq.com/service']
+          - name: DD_VERSION
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.labels['tags.datadoghq.com/version']        
+          - name: DD_AGENT_HOST
+            valueFrom:
+              fieldRef:
+                fieldPath: status.hostIP
+          - name: DD_LOGS_INJECTION
+            value: "true"    
+        
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: task-service
+  ## namespace: develop
+spec:
+  selector:
+    app: task-pod
+  ports:
+     - port: 3000
+  type: ClusterIP

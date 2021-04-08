@@ -1,0 +1,7 @@
+db:
+  port: 5000
+  name_db: 'task_db'
+  host: 'localhost'
+  user: 'postgres'
+  password: 'postgres'
+  synchronize: true
