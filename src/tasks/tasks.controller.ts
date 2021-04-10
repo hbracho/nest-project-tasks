@@ -17,7 +17,7 @@ export class TasksController {
     getTasks(@Query(ValidationPipe) taskfilterDto: GetTaskFilterDto):Promise <Task[]>{
         
         this.logger.debug(`Server is up and running HAROLD`);
-        this.logger.log({message: 'hello', attributes : { env: 'dev' }});
+        this.logger.log({message: 'request to get all task on the system',  attributes : { env_custom: 'dev' }});
 
         return this.taskService.getTasks(taskfilterDto);
 

@@ -10,6 +10,7 @@ ADD . /code
 #RUN  yarn cache clean
 #CMD [ "yarn", "start" ]
 RUN npm install
+RUN npm install dd-trace --save
 RUN npm run build
 CMD ["npm", "run", "start"]
 EXPOSE 3000
