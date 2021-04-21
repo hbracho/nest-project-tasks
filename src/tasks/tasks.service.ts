@@ -18,6 +18,9 @@ export class TasksService {
     }
 
     getTasks(filterDTO: GetTaskFilterDto): Promise<Task[]>{
+        // if(filterDTO.status ==='OPEN'){
+        //     throw new Error('asdasdasd');
+        // }
         return this.taskRepository.getTasks(filterDTO);
     }
 

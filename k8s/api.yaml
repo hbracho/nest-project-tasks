@@ -15,11 +15,14 @@ spec:
   template:
     metadata:      
       labels:
-        app: task-pod        
+        app: task-pod
+        tags.datadoghq.com/env: "dev"
+        tags.datadoghq.com/service: "task-service"
+        tags.datadoghq.com/version: "v0.1"                  
     spec:
       containers:
       - name: task
-        image: hbracho/task:v0.4
+        image: hbracho/task:v0.8
         ports:
         - containerPort: 3000
         env:
@@ -34,15 +37,15 @@ spec:
           - name: POSTGRES_PORT
             value: "5432"                       
           - name: DD_ENV
-            value: "dev"
-            #valueFrom:
-            #  fieldRef:
-            #    fieldPath: metadata.labels['tags.datadoghq.com/env']
+            #value: "dev"
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.labels['tags.datadoghq.com/env']
           - name: DD_SERVICE
-            value: "task-service"
-            #valueFrom:
-            #  fieldRef:
-            #    fieldPath: metadata.labels['tags.datadoghq.com/service']
+            #value: "task-service"
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.labels['tags.datadoghq.com/service']
           - name: DD_VERSION
             valueFrom:
               fieldRef:

@@ -8,7 +8,8 @@ export class LoggerWinston extends Logger {
     super();
     const transport = new transports.Console();
     this.logger = createLogger({
-      format: format.json(),
+      level: 'debug',
+      format: format.combine(format.json(), ),
       transports: [transport],
     });
   }
@@ -16,29 +17,45 @@ export class LoggerWinston extends Logger {
     const now = new Date();
     return now.getTime();
   }
-
+  
   log(message: any, ctx: string): void {
+    
     if (typeof message === 'string') {
-      message = { attributes: { message } };
-    }
-    const msg = message.message || ctx;
-    this.logger.info(msg, {
-      ...message,
-      timestamp: this.now(),
-    });
+      this.logger.info({message, loggerName: ctx,timeMillis: this.now()});
+    } else{
+      this.logger.info({...message, loggerName: ctx,timeMillis: this.now()});
+    } 
+  }
+
+  debug(message: any, context?: string){
+    if (typeof message === 'string') {
+      this.logger.debug({message, loggerName: context,timeMillis: this.now()});
+    } else{
+      this.logger.debug({...message, loggerName: context,timestamp: this.now()});
+    } 
   }
 
   error(message: any, trace?: string, ctx?: string): void {
+    
     if (typeof message === 'string') {
-      message = { attributes: { message } };
-    }
-    const msg = message.message || ctx;
-    this.logger.error(msg, {
-      ...message,
-      trace,
-      timestamp: this.now(),
-    });
+      
+      this.logger.error({
+        message,
+        loggerName: ctx,
+        trace,
+        timeMillis: this.now(),
+      });
+
+    } else {
+      this.logger.error({
+        ... message,
+        loggerName: ctx,        
+        timeMillis: this.now(),
+      });
+    }    
+    
   }
+  
 
   writeLog(level: string, body: any): void {
     this.logger.log(level, body);

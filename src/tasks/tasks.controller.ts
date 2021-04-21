@@ -15,11 +15,15 @@ export class TasksController {
 
     @Get()
     getTasks(@Query(ValidationPipe) taskfilterDto: GetTaskFilterDto):Promise <Task[]>{
-        
-        this.logger.debug(`Server is up and running HAROLD`);
-        this.logger.log({message: 'request to get all task on the system',  attributes : { env_custom: 'dev' }});
-
-        return this.taskService.getTasks(taskfilterDto);
+        try{
+            this.logger.debug('test de harod bracho','asdasd');
+            this.logger.log({message: 'request to get all task on the system',  contextMap : { env_custom: 'dev' }});
+            
+            return this.taskService.getTasks(taskfilterDto);
+        }catch(e){
+            this.logger.error('harold errror')
+            this.logger.error({message: 'menssage',trace: 'asdasdasd'});
+        }
 
     }
 
