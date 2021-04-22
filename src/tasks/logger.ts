@@ -9,7 +9,7 @@ export class LoggerWinston extends Logger {
     const transport = new transports.Console();
     this.logger = createLogger({
       level: 'debug',
-      format: format.combine(format.json(), ),
+      format: format.combine(format.json(), format.prettyPrint()),
       transports: [transport],
     });
   }

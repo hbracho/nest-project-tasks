@@ -1,4 +1,4 @@
-import { Body, Controller, Logger, Post, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Logger, Post, Req, UseGuards, ValidationPipe } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { CreateUserDto } from './dto/create-user.dto';
 
@@ -23,10 +23,10 @@ export class AuthController {
 
 
     @Post('singin')
-    async singIn(@Body(ValidationPipe) createUserDto: CreateUserDto){
+    async singIn(@Body(ValidationPipe) createUserDto: CreateUserDto):Promise<{accessToken:string}>{
         try{
 
-            await this.authService.singIn(createUserDto);
+            return await this.authService.singIn(createUserDto);
         }catch(e){
             this.logger.error({message: 'error harold bracho', thrown: {message: e.message, stackTrace: e.stack} });
             throw e;
