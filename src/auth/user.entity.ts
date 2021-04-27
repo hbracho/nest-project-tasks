@@ -1,7 +1,7 @@
 import { IsOptional } from "class-validator";
 import { BaseEntity, Column, Entity, OneToMany, PrimaryGeneratedColumn, Unique } from "typeorm";
 import * as bcryptjs from "bcryptjs";
-import { Task } from "src/tasks/task.entity";
+import { Task } from '../tasks/task.entity';
 @Entity()
 @Unique(['username'])
 export class User extends BaseEntity{

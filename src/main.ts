@@ -4,6 +4,10 @@ import { LoggerWinston } from './tasks/logger';
 import './tracer'; 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {logger: new LoggerWinston()});
+
+  if(process.env.NODE_ENV === 'development'){
+    app.enableCors();
+  }
   await app.listen(3000);
 }
 bootstrap();

@@ -8,9 +8,16 @@ import { JwtStrategy } from './jwt.strategy';
 import { UserRepository } from './user.repository';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([UserRepository]),
-  PassportModule.register({defaultStrategy: 'jwt'}),
-  JwtModule.register({secret: 'harold', signOptions: {expiresIn: 3600,}}),
+  imports: [
+    TypeOrmModule.forFeature([UserRepository]),
+    PassportModule.register({defaultStrategy: 'jwt'}),
+    JwtModule.register({
+      secret: 'harold', 
+      signOptions: {
+        expiresIn: 3600,
+      }
+    }),
+    TypeOrmModule.forFeature([UserRepository]),
   ],
   controllers: [AuthController],
   providers: [
